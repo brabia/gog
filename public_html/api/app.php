@@ -210,13 +210,14 @@
 						if(count($cart['cart']) == 0){
 							echo json_encode(array(
 								'CartID' => $_GET['CartID'],
-								'Products' => []
+								'Products' => [],
+								'TotalPrice' => 0
 							));
 						}else{
 							$cart = $cart['cart'][0];
 							$Products = json_decode($cart['Products'], true);
 							$sum = 0;
-							foreach($Products as $Products){$sum = $sum + $Products['Price'];}							
+							foreach($Products as $Product){$sum = $sum + $Product['Price'];}							
 							echo json_encode(array(
 								'CartID' => $_GET['CartID'],
 								'Products' => $Products,
@@ -292,12 +293,13 @@
 							'Table' => 'Carts',
 							'CartID' => $_POST['cartID']
 						));
+						
 						if(count($cart['cart']) == 0){
 							$CartID = $this->app['database']->createCart(array(
 								'Table' => 'Carts',
 								'CartID' => $_POST['cartID']
 							));
-						}else{							
+						}else{
 							$productID = $_POST['productID'];
 							$cart = $cart['cart'][0];
 							$cartProducts = isset($cart['Products'])?json_decode($cart['Products'], true):array();

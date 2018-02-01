@@ -21,6 +21,7 @@ jQuery(function(){
 						'productID': arg.productID
 					},
 					success: function(r){
+						console.log(r);
 						gogo.cart.getCount();
 					}
 				});
@@ -46,7 +47,8 @@ jQuery(function(){
 						jQuery('.prodList ul').html('');
 						jQuery.each(r.Products, function(){
 							jQuery('.prodList ul').append('<li><span class="price">'+this.Price+' PLN</span><span product-id="'+this.ID+'" class="delete"></span>'+this.Title+'</li>');
-						});
+						});						
+						jQuery('.prodList ul').append('<li><span class="price">'+r.TotalPrice+' PLN</span>Total: </li>');
 						
 						jQuery('.prodList .delete').click(function(){
 							gogo.cart.deleteProduct({
