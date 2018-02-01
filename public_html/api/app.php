@@ -192,8 +192,7 @@
 				| cart
 				----------------------------------- **/
 				
-				case 'get-cart':
-				
+				case 'get-cart':				
 					/** ----------------------------------
 					| cart - get products
 					| @return: json
@@ -215,9 +214,13 @@
 							));
 						}else{
 							$cart = $cart['cart'][0];
+							$Products = json_decode($cart['Products'], true);
+							$sum = 0;
+							foreach($Products as $Products){$sum = $sum + $Products['Price'];}							
 							echo json_encode(array(
 								'CartID' => $_GET['CartID'],
-								'Products' => json_decode($cart['Products'], true)
+								'Products' => $Products,
+								'TotalPrice' => $sum
 							));
 						}
 					}
