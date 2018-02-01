@@ -161,8 +161,9 @@
 							'From' => (isset($_GET['from']) AND !empty($_GET['from']))?$_GET['from']:'0',
 							'Limit' => (isset($_GET['limit']) AND !empty($_GET['limit']))?$_GET['limit']:'5'
 						));
-						echo ($products['code'] == 200)?(count($products['products']) > 0)?json_encode($products['products']):json_encode(array(
-							'message' => 'This Product does no longer exists!'
+						echo ($products['code'] == 200)?(count($products['products']) > 0)?json_encode(array('Products' => $products['products'])):json_encode(array(
+							'Products' => [],
+							'message' => 'No Products have been found!'
 						)):json_encode($products);
 					}
 				break;

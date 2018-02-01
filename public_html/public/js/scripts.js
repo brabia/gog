@@ -2,38 +2,65 @@ jQuery(function(){
 	window.gogo = {
 		uId: function(){
 			return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c){
-				var r = Math.random() * 16 | 0,
-				v = c == 'x' ? r : (r & 0x3 | 0x8);
+				var r = Math.random() * 16 | 0, v = c == 'x' ? r : (r & 0x3 | 0x8);
 				return v.toString(16);
 			}).toUpperCase();
 		},
-		getCartCount: function(){
-			jQuery.get('http://api.gogo.com/cart/get?getCount&CartID='+localStorage.getItem('cartId'), function(r){
-				r = JSON.parse(r);
-				// console.log('Products', r.Products);
-				if(r.Products !== null){
-					jQuery('.cart').addClass('active');
-					jQuery('.cart span').text(Object.keys(r.Products).length);
-					jQuery('.prodList ul').html('');
-					jQuery.each(r.Products, function(){
-						jQuery('.prodList ul').append('<li><span class="price">'+this.Price+' PLN</span><span product-id="'+this.ID+'" class="delete"></span>'+this.Title+'</li>');
-					});
-					
-					jQuery('.prodList .delete').click(function(){
-						gogo.deleteFromCart({
-							'cartID': localStorage.getItem('cartId'),
-							'productID': jQuery(this).attr('product-id')
+		cart: {
+			addProduct: function(arg){
+				jQuery.ajax({
+					url: 'http://api.gogo.com/cart/add',
+					type: 'POST',
+					data: {
+						'cartID': arg.cartID,
+						'productID': arg.productID
+					},
+					success: function(r){
+						gogo.cart.getCount();
+					}
+				});
+			},
+			deleteProduct: function(arg){
+				jQuery.ajax({
+					url: 'http://api.gogo.com/cart/delete',
+					data: {
+						'cartID': arg.cartID,
+						'productID': arg.productID
+					},
+					success: function(r){
+						gogo.cart.getCount();
+					}
+				});
+			},
+			getCount: function(){
+				jQuery.get('http://api.gogo.com/cart/get?getCount&CartID='+localStorage.getItem('cartId'), function(r){
+					r = JSON.parse(r);
+					if(r.Products !== null){
+						jQuery('.cart').addClass('active');
+						jQuery('.cart span').text(Object.keys(r.Products).length);
+						jQuery('.prodList ul').html('');
+						jQuery.each(r.Products, function(){
+							jQuery('.prodList ul').append('<li><span class="price">'+this.Price+' PLN</span><span product-id="'+this.ID+'" class="delete"></span>'+this.Title+'</li>');
 						});
+						
+						jQuery('.prodList .delete').click(function(){
+							gogo.cart.deleteProduct({
+								'cartID': localStorage.getItem('cartId'),
+								'productID': jQuery(this).attr('product-id')
+							});
+						});
+					}
+					var prodList = jQuery('.container .prodList');
+					jQuery('.cart.active').mouseenter(function(){
+						prodList.show();
 					});
-				}
-				jQuery('.cart.active').mouseenter(function(){
-					jQuery('.container .prodList').show();
+					jQuery('.products-section').mouseenter(function(){
+						prodList.hide();
+					});
 				});
-				jQuery('.products-section').mouseenter(function(){
-					jQuery('.container .prodList').hide();
-				});
-			});
+			},
 		},
+		
 		pagination: function(){
 			jQuery.get('http://api.gogo.com/products?getCount', function(r){
 				r = JSON.parse(r);
@@ -46,45 +73,15 @@ jQuery(function(){
 				jQuery('.pagination .page').click(function(){
 					jQuery('.pagination .page').removeClass('current');
 					jQuery(this).addClass('current');
-					gogo.getProducts({
+					gogo.products.getAll({
 						'from': (jQuery(this).text() - 1) * 3,
 						'limit': 3
 					});
 				});
 			});
 		},
-		deleteFromCart: function(arg){
-			// console.log('pId', arg)
-			jQuery.ajax({
-				url: 'http://api.gogo.com/cart/delete',
-				data: {
-					'cartID': arg.cartID,
-					'productID': arg.productID
-				},
-				success: function(r){
-					// console.log(r);
-					gogo.getCartCount();
-				}
-			});
-		},
-		addToCart: function(arg){
-			// console.log('pId', arg)
-			jQuery.ajax({
-				url: 'http://api.gogo.com/cart/add',
-				type: 'POST',
-				data: {
-					'cartID': arg.cartID,
-					'productID': arg.productID
-				},
-				success: function(r){
-					console.log(r);
-					gogo.getCartCount();
-				}
-			});
-		},
 		buyNow: function(arg){
 			jQuery('.productsList .addToCart').remove();
-			// console.log('pId', arg)
 			var product = jQuery('.productsList .product.buying .image').clone();
 			product.addClass('addToCart');
 			jQuery('.productsList').after(product);			
@@ -96,7 +93,7 @@ jQuery(function(){
 				'top': jQuery('.cart').offset().top,
 				'left': jQuery('.cart').offset().left - 150,
 			}, 1500, function(){
-				gogo.addToCart({
+				gogo.cart.addProduct({
 					'cartID': localStorage.getItem('cartId'),
 					'productID': arg
 				});
@@ -112,36 +109,39 @@ jQuery(function(){
 				localStorage.setItem('cartId', gogo.uId());
 			}
 	
-			gogo.getCartCount();
-			gogo.getProducts({
+			gogo.cart.getCount();
+			gogo.products.getAll({
 				'from': 0,
 				'limit': 3
 			});
 			gogo.pagination();
 		},
-		getProducts: function(arg){
-			jQuery.get('http://api.gogo.com/products?from='+arg.from+'&limit='+arg.limit, function(r){
-				r = JSON.parse(r);
-				jQuery('.productsList').html('');
-				jQuery.each(r, function(){
-					jQuery('.productsList').append(''
-						+'<div class="product">'
-							+'<div class="image"></div>'
-							+'<div class="name">'+this.Title+'</div>'
-							+'<div class="price">'+this.Price+' PLN</div>'
-							+'<div product-id="'+this.ID+'" class="buy">Buy</div>'
-						+'</div>'
-					+'');
+		products:{
+			getAll: function(arg){
+				jQuery.get('http://api.gogo.com/products?from='+arg.from+'&limit='+arg.limit, function(r){
+					r = JSON.parse(r);
+					if(r.Products.length > 0){
+						jQuery('.productsList').html('');
+						jQuery.each(r.Products, function(){
+							jQuery('.productsList').append(''
+								+'<div class="product">'
+									+'<div class="image"></div>'
+									+'<div class="name">'+this.Title+'</div>'
+									+'<div class="price">'+this.Price+' PLN</div>'
+									+'<div product-id="'+this.ID+'" class="buy">Buy</div>'
+								+'</div>'
+							+'');
+						});						
+						jQuery('.productsList .buy').click(function(){
+							jQuery(this).closest('.product').addClass('buying');
+							setTimeout(function(){
+								jQuery('.buying').removeClass('buying');
+							}, 1000*3);
+							gogo.buyNow(jQuery(this).attr('product-id'));
+						});
+					}
 				});
-				
-				jQuery('.productsList .buy').click(function(){
-					jQuery(this).closest('.product').addClass('buying');
-					setTimeout(function(){
-						jQuery('.buying').removeClass('buying');
-					}, 1000*3);					
-					gogo.buyNow(jQuery(this).attr('product-id'));
-				});
-			});
+			}
 		}
 	}
 	gogo.init();
