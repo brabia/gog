@@ -86,6 +86,52 @@ CREATE TABLE `Products` (
 Usage:
 -----------------------
 
+```php
+PRODUCT
+
+ADD
+URL: http://api.gogo.com/product/update 
+Method: POST
+Parameter: title (string) - price (float) - productID (integer)
+
+ADD
+URL: http://api.gogo.com/product/create 
+Method: POST
+Parameter: title (string) - price (float)
+
+DELETE
+URL: http://api.gogo.com/cart/delete?cartID=7BF953F3-341D-498E-99DF-CCAB6599CCEA&productID=36 
+Method: GET
+Parameter: cartID (string) - productID (integer)
+
+GET
+URL: http://api.gogo.com/products?from=0&limit=3 
+Method: GET
+Parameter: from (string) - limit (string)
+
+
+CART
+
+ADD
+URL: http://api.gogo.com/cart/update 
+Method: POST
+Parameter: title (string) - price (float) - productID (integer)
+
+ADD
+URL: http://api.gogo.com/cart/create 
+Method: POST
+Parameter: cartID (string) - productID (integer)
+
+DELETE
+URL: http://api.gogo.com/cart/delete?cartID=7BF953F3-341D-498E-99DF-CCAB6599CCEA&productID=36 
+Method: GET
+Parameter: cartID (string) - productID (integer)
+
+GET CART DETAILS
+http://api.gogo.com/cart/get?getCount&CartID=7BF953F3-341D-498E-99DF-CCAB6599CCEA
+Method: GET
+Parameter: cartID (string)
+```
 
 **NOTES:**
 
