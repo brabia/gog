@@ -29,6 +29,25 @@
 			}
 		}
 		
+		
+		public function addProduct($array){
+			try{
+				$sql = 'insert into '.$array['Table'].' (Title, Price) values ("'.$array['Title'].'", '.$array['Price'].') ';
+				$query = $this->pdo->prepare($sql);
+				$query->execute();
+				return array(
+					'code' => 200,
+					'productId' => $this->pdo->lastInsertId()
+				);
+			}catch(PDOException $e){
+				return array(
+					'code' => 300,
+					'title' => 'queryBuilder!',
+					'message' => $e->getMessage()
+				);
+			}
+		}
+		
 		public function getCount($array){
 			try{
 				$sql = 'select count(ID) as products from '.$array['Table'].'';
