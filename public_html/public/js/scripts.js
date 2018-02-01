@@ -5,6 +5,7 @@
 */
 jQuery(function(){
 	window.gogo = {
+		apiUrl: 'http://api.gogo.com/',
 		uId: function(){
 			return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c){
 				var r = Math.random() * 16 | 0, v = c == 'x' ? r : (r & 0x3 | 0x8);
@@ -14,7 +15,7 @@ jQuery(function(){
 		cart: {
 			addProduct: function(arg){
 				jQuery.ajax({
-					url: 'http://api.gogo.com/cart/add',
+					url: gogo.apiUrl+'cart/add',
 					type: 'POST',
 					data: {
 						'cartID': arg.cartID,
@@ -28,7 +29,7 @@ jQuery(function(){
 			},
 			deleteProduct: function(arg){
 				jQuery.ajax({
-					url: 'http://api.gogo.com/cart/delete',
+					url: gogo.apiUrl+'cart/delete',
 					data: {
 						'cartID': arg.cartID,
 						'productID': arg.productID
@@ -39,7 +40,7 @@ jQuery(function(){
 				});
 			},
 			getCount: function(){
-				jQuery.get('http://api.gogo.com/cart/get?getCount&CartID='+localStorage.getItem('cartId'), function(r){
+				jQuery.get(gogo.apiUrl+'cart/get?getCount&CartID='+localStorage.getItem('cartId'), function(r){
 					r = JSON.parse(r);
 					if(r.Products !== null){
 						jQuery('.cart').addClass('active');
@@ -69,7 +70,7 @@ jQuery(function(){
 		},
 		
 		pagination: function(){
-			jQuery.get('http://api.gogo.com/products?getCount', function(r){
+			jQuery.get(gogo.apiUrl+'products?getCount', function(r){
 				r = JSON.parse(r);
 				jQuery('.pagination').html('');
 				for(var i=1;i<=Math.ceil(r[0].products/3);i++){
@@ -125,7 +126,7 @@ jQuery(function(){
 		},
 		products:{
 			getAll: function(arg){
-				jQuery.get('http://api.gogo.com/products?from='+arg.from+'&limit='+arg.limit, function(r){
+				jQuery.get(gogo.apiUrl+'products?from='+arg.from+'&limit='+arg.limit, function(r){
 					r = JSON.parse(r);
 					if(r.Products.length > 0){
 						jQuery('.productsList').html('');
