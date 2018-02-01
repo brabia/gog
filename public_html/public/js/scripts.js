@@ -95,7 +95,7 @@ jQuery(function(){
 			jQuery('.addToCart').css({
 				'top': jQuery('.productsList .product.buying').offset().top,
 				'left': jQuery('.productsList .product.buying').offset().left,
-			}).animate({
+			}).stop().animate({
 				'opacity': '0.5',
 				'top': jQuery('.cart').offset().top,
 				'left': jQuery('.cart').offset().left - 150,

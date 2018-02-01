@@ -216,13 +216,23 @@
 						}else{
 							$cart = $cart['cart'][0];
 							$Products = json_decode($cart['Products'], true);
+							
+							// echo '<pre>'; print_r($Products); echo '</pre>';
 							$sum = 0;
-							foreach($Products as $Product){$sum = $sum + $Product['Price'];}							
-							echo json_encode(array(
-								'CartID' => $_GET['CartID'],
-								'Products' => $Products,
-								'TotalPrice' => $sum
-							));
+							if(count($Products) > 0){
+								foreach($Products as $Product){$sum = $sum + $Product['Price'];}
+								echo json_encode(array(
+									'CartID' => $_GET['CartID'],
+									'Products' => $Products,
+									'TotalPrice' => $sum
+								));
+							}else{
+								echo json_encode(array(
+									'CartID' => $_GET['CartID'],
+									'Products' => [],
+									'TotalPrice' => 0
+								));
+							}
 						}
 					}
 				break;
@@ -247,29 +257,36 @@
 							'Table' => 'Carts',
 							'CartID' => $_GET['cartID']
 						));
-						if(count(json_decode($cart['cart'][0]['Products'], true)) == 0){
+						if(count($cart['cart']) == 0){
 							echo json_encode(array(
 								'code' => 300,
 								'message' => 'Empty Cart!'
 							));
 						}else{
-							$productID = $_GET['productID'];
-							$cart = $cart['cart'][0];
-							$cartProducts = isset($cart['Products'])?json_decode($cart['Products'], true):array();							
-							unset($cartProducts[$productID]);
-							$addToCart = $this->app['database']->addToCart(array(
-								'Table' => 'Carts',
-								'CartID' => $_GET['cartID'],
-								'Products' => json_encode($cartProducts)
-							));
-							echo ($addToCart['code'] == 200)?json_encode(array(
-								'id' => $productID,
-								'message' => 'Product successfully deleted from cart!'
-							)):json_encode(array(
-								'code' => $addToCart['code'],
-								'message' => $addToCart['message']
-							));
-						}
+							if(count(json_decode($cart['cart'][0]['Products'], true)) == 0){
+								echo json_encode(array(
+									'code' => 300,
+									'message' => 'Empty Cart!'
+								));
+							}else{
+								$productID = $_GET['productID'];
+								$cart = $cart['cart'][0];
+								$cartProducts = isset($cart['Products'])?json_decode($cart['Products'], true):array();							
+								unset($cartProducts[$productID]);
+								$addToCart = $this->app['database']->addToCart(array(
+									'Table' => 'Carts',
+									'CartID' => $_GET['cartID'],
+									'Products' => json_encode($cartProducts)
+								));
+								echo ($addToCart['code'] == 200)?json_encode(array(
+									'id' => $productID,
+									'message' => 'Product successfully deleted from cart!'
+								)):json_encode(array(
+									'code' => $addToCart['code'],
+									'message' => $addToCart['message']
+								));
+							}
+						}						
 					}
 				break;
 				case 'add-cart':
