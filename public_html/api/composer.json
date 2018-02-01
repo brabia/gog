@@ -1,18 +1,14 @@
 {
     "name": "brabia/gogo",
-    "description": "An GOG Client",
+    "description": "A GOG Client",
     "version": "0.0.1",
     "license": "MIT",
-    "authors": [
+    "authors":[
         {
             "name": "Bassem Rabia",
             "email": "bassem.rabia@gmail.com",
             "role": "Developer"
         }
     ],
-	"autoload": {
-		"classmap": [
-			"./"
-		]
-	}
+	"autoload":{}
 }
