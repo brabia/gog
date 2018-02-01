@@ -86,7 +86,6 @@ CREATE TABLE `Products` (
 Usage:
 -----------------------
 
-```php
 PRODUCT
 
 | Command | URL | Method | Parameter |
@@ -103,8 +102,6 @@ CART
 | Add | http://api.gogo.com/product/create | POST | cartID (string) - productID (integer) |
 | Delete | http://api.gogo.com/cart/delete?cartID=7BF953F3-341D-498E-99DF-CCAB6599CCEA&productID=36 | GET | cartID (string) - productID (integer) |
 | Get Cart | http://api.gogo.com/cart/get?getCount&CartID=7BF953F3-341D-498E-99DF-CCAB6599CCEA | GET | cartID (string) |
-
-```
 
 **NOTES:**
 
