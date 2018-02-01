@@ -1,0 +1,166 @@
+body{
+	background: #f5f5f5;
+	margin: 0;
+	padding: 0;}
+.container{
+	width: 1024px;
+    margin: 0 auto;
+    padding: 10px;
+    overflow: hidden;
+}
+.container .header{
+	background: #fff;
+	overflow: hidden;
+	padding: 10px;
+	border: 1px solid #ddd;
+	margin-bottom: 20px;
+}
+.container .sidebar{
+	background: #fff;
+	overflow: hidden;
+	padding: 10px;
+	border: 1px solid #ddd;
+	margin-bottom: 20px;
+	width: 235px;
+}
+.container .sidebar-section{	
+	background: #fff;		
+	overflow: hidden;		
+	padding: 10px;		
+	border: 1px solid #ddd;		
+	margin-bottom: 20px;		
+	float: left;		
+	width: 215px;
+	position: relative;
+}
+.container .products-section{background: #fff;overflow: hidden;padding: 10px;border: 1px solid #ddd;margin-bottom: 20px;float: right;width: 750px;}
+.container .products{
+	overflow: hidden;
+	margin-bottom: 20px;
+	text-align: center;
+	width: 750px;
+}
+.container .header .cart{
+	background: url(../images/cart.png) no-repeat center;
+	height: 24px;
+	width: 24px;
+	margin: 0 auto;
+	background-size: 24px;
+	float: right;
+	cursor: pointer;
+	position: relative;
+}
+.container .header .cart span{position: absolute;top: 0px;width: 17px;text-align: center;left: -8px;background: #c17f7f;height: 17px;line-height: 18px;border-radius: 15px;font-size: 12px;color: #fff;}
+.container .prodList{
+	display:none;
+	position: absolute;
+    background: #f5f5f5;
+    z-index: 999;
+    width: 190px;
+    border-top: 1px solid #ccc;
+    border-right: 1px solid #ccc;
+    border-left: 1px solid #ccc;
+}
+.container .prodList .arrow-up{
+	width: 0;
+    height: 0;
+    border-left: 10px solid transparent;
+    border-right: 10px solid transparent;
+    border-bottom: 10px solid #ccc;
+    margin-top: -10px;
+    float: right;
+}
+.container .prodList ul{
+	margin: 0;
+    padding: 0;	
+}
+.container .prodList ul li{
+	list-style-type: none;
+	font-size: 13px;
+    padding: 5px;
+    border-bottom: 1px solid #ccc;	
+}
+.container .prodList ul li span.price{
+	float: right;
+}
+.container .prodList ul li span.delete{
+	width: 10px;
+    height: 10px;
+    display: inline-block;
+    background: red;
+    margin-right: 5px;
+    margin-top: 2px;
+    cursor: pointer;
+}
+.container .header .logo{
+	background: url(../images/250x250.png) no-repeat -10px -40px;
+	height: 45px;
+	width: 150px;
+	margin: 0 auto;
+	background-size: 125px auto;
+	float: left;
+	cursor: pointer;
+}
+
+.container h1{
+    margin: 0;
+    padding: 0;
+    border-bottom: 1px dashed #ddd;
+    margin-bottom: 10px;
+    text-align: left;
+    font-size: 14px;
+    line-height: 20px;
+}
+.container .products .product{
+	width: 235px;
+	text-align: center;
+	display: inline-block;
+	background: #fff;
+	border: 1px solid #ccc;
+	margin-right: 10px;
+	margin-bottom: 10px;
+	border-radius:3px;
+	position: relative;
+}
+.container .products .product:last-child{
+	margin-right: 0;
+}
+.container .products .product .image{
+	background: url(../images/product.png) no-repeat center;
+	height: 155px;
+	width: 128px;
+	margin: 0 auto;
+	cursor: pointer;
+}
+.container .products .addToCart{
+	position: absolute;
+    height: 157px;
+    z-index: 9999999999999;
+    background: url(../images/product.png) no-repeat center;
+    width: 236px;
+}
+.container .products .product .name{margin-bottom: 5px;}
+.container .products .product .price{
+	position: absolute;
+	top: 10px;
+	width: 70px;
+	padding: 3px;
+	font-size: 13px;
+	border-radius: 0 3px 3px 0;
+	text-align: left;
+	padding-left: 10px;
+	background: #ddd;
+	padding: 5px;
+	cursor: pointer;
+	border: 1px solid #ccc;
+	border-left: 0;
+}
+.container .products .product .buy{
+	background: #ddd;
+	padding: 5px;
+	cursor: pointer;
+	border-top: 1px solid #ccc;
+}
+.container .pagination{text-align: center;}
+.container .page{background: #e8e2e2;padding: 5px;width: 10px;height: 10px;line-height: 10px;text-align: center;display: inline-block;border-radius: 10px;font-size: 12px;cursor: pointer;margin-right: 5px;}
+.container .page.current{background: #E51837;color: #fff;}
