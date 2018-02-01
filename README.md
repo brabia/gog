@@ -86,10 +86,9 @@ CREATE TABLE `Products` (
 Usage:
 -----------------------
 
-| First Header  | Second Header |
-| ------------- | ------------- |
-| Content Cell  | Content Cell  |
-| Content Cell  | Content Cell  |
+| Command | URL | Method | Parameter |
+| ------------- | ------------- | ------------- | ------------- |
+| Command | URL | Method | Parameter |
 
 PRODUCT
 
