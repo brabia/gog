@@ -16,11 +16,12 @@
 					$config['options']
 				);
 			}catch(PDOException $e){
-				App::Exception(array(
-					'title' => 'PDO!',
+				return array(
+					'code' => 300,
+					'title' => 'queryBuilder!',
 					'message' => $e->getMessage()
-				));
-			}	
+				);
+			}
 		}
 	}
 ?>

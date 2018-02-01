@@ -7,7 +7,7 @@
 	
 	return [
 		'database' => [
-			'name' => 'gogo',
+			'name' => 'gag',
 			'username' => 'root',
 			'password' => '123',
 			'connection' => 'mysql:host=127.0.0.1',

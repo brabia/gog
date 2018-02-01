@@ -37,12 +37,20 @@
 	
 			$this->config = require 'config/config.php';
 			$this->app['database'] = new query(Connection::make($this->config['database']));
-			$this->doRequest(
-				$this->router->doRequest(
-					Request::uri(),
-					Request::method()
-				)
-			);
+			
+			$this->db = current( (Array)$this->app['database']);
+			if(count((array)$this->db) == 0 OR !isset($this->db['code'])){
+				$this->doRequest(
+					$this->router->doRequest(
+						Request::uri(),
+						Request::method()
+					)
+				);
+			}else{
+				echo json_encode(array(
+					'message' => '-- Please check configuration --'
+				));
+			}
 		}
 		public function doRequest($arg){
 			if($arg['code'] == '404'){
@@ -162,7 +170,6 @@
 							'Limit' => (isset($_GET['limit']) AND !empty($_GET['limit']))?$_GET['limit']:'5'
 						));
 						echo ($products['code'] == 200)?(count($products['products']) > 0)?json_encode(array('Products' => $products['products'])):json_encode(array(
-							'Products' => [],
 							'message' => 'No Products have been found!'
 						)):json_encode($products);
 					}
