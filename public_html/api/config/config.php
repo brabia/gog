@@ -8,7 +8,7 @@
 	
 	return [
 		'database' => [
-			'name' => 'gag',
+			'name' => 'gogo',
 			'username' => 'root',
 			'password' => '123',
 			'connection' => 'mysql:host=127.0.0.1',
