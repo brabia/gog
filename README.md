@@ -92,7 +92,7 @@ PRODUCT
 | ------------- | ------------- | ------------- | ------------- |
 | Update | http://api.gogo.com/product/update | POST | title (string) - price (float) - productID (integer) |
 | Add Product | http://api.gogo.com/product/create | POST | title (string) - price (float) |
-| Get Products | http://api.gogo.com/products?from=0&limit=3 | GET | from (string) - limit (string) |
+| Get Products | http://api.gogo.com/products?from=0&limit=3 | GET | from (integer) - limit (integer) |
 | Delete Product | http://api.gogo.com/cart/delete?cartID=7BF953F3-341D-498E-99DF-CCAB6599CCEA&productID=36 | GET | cartID (string) - productID (integer) |
 
 CART
@@ -105,6 +105,6 @@ CART
 
 **NOTES:**
 
-- CartID will be auto generate thanks to gogo.uId() http://prntscr.com/i8shvw
+- CartID will be auto generated thanks to gogo.uId() http://prntscr.com/i8shvw
 - gogo.com: public web site
 - api.gogo.com: api end point
